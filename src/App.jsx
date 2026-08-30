@@ -110,7 +110,7 @@ function jumpToSection(event, id) {
 
   const offset = (header?.offsetHeight ?? 0) + 18
   const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset)
-  window.scrollTo({ top, behavior: 'auto' })
+  window.scrollTo({ top, behavior: 'smooth' })
   window.history.replaceState(null, '', `#${id}`)
 }
 
