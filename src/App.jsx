@@ -46,6 +46,7 @@ const heroSlides = [
 function RevealImage({ src, alt }) {
   const imageRef = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     const image = imageRef.current
@@ -59,10 +60,11 @@ function RevealImage({ src, alt }) {
     }, { rootMargin: '0px 0px -8% 0px' })
 
     observer.observe(image)
+    if (image.complete && image.naturalWidth > 0) setIsLoaded(true)
     return () => observer.disconnect()
   }, [])
 
-  return <img ref={imageRef} className={`reveal-image${isVisible ? ' is-visible' : ''}`} src={src} alt={alt} loading="lazy" decoding="async" />
+  return <div className={`reveal-frame${isLoaded ? ' is-loaded' : ''}`}><div className="reveal-placeholder" aria-hidden="true"><span className="reveal-placeholder-icon">✦</span><span>Loading photo</span></div><img ref={imageRef} className={`reveal-image${isVisible || isLoaded ? ' is-visible' : ''}`} src={src} alt={alt} loading="lazy" decoding="async" onLoad={() => setIsLoaded(true)} /></div>
 }
 
 function ScrollScaleText({ as: Tag = 'h2', className = '', children }) {
