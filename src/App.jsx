@@ -115,6 +115,7 @@ function jumpToSection(event, id) {
 function App() {
   const [activeHero, setActiveHero] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [showMobileNotice, setShowMobileNotice] = useState(false)
   const currentHero = heroSlides[activeHero]
 
   useEffect(() => {
@@ -126,8 +127,20 @@ function App() {
     return () => window.clearInterval(timer)
   }, [isAutoPlaying])
 
+  useEffect(() => {
+    const isSmallScreen = window.matchMedia('(max-width: 980px)').matches
+    const wasDismissed = window.sessionStorage.getItem('mobile-notice-dismissed')
+    if (isSmallScreen && !wasDismissed) setShowMobileNotice(true)
+  }, [])
+
+  const closeMobileNotice = () => {
+    window.sessionStorage.setItem('mobile-notice-dismissed', 'true')
+    setShowMobileNotice(false)
+  }
+
   return (
-    <main className="portfolio" style={{ '--bar-a': currentHero.bar[0], '--bar-b': currentHero.bar[1], '--bar-c': currentHero.bar[2], '--spot-1': currentHero.spots[0], '--spot-2': currentHero.spots[1], '--spot-3': currentHero.spots[2], '--spot-4': currentHero.spots[3], '--spot-5': currentHero.spots[4], '--spot-6': currentHero.spots[5], '--card-a': currentHero.cards[0], '--card-b': currentHero.cards[1], '--card-c': currentHero.cards[2], '--card-border': currentHero.cards[3], '--role-card': currentHero.cards[4], '--media-card': currentHero.cards[5] }}>
+    <>
+      <main className="portfolio" style={{ '--bar-a': currentHero.bar[0], '--bar-b': currentHero.bar[1], '--bar-c': currentHero.bar[2], '--spot-1': currentHero.spots[0], '--spot-2': currentHero.spots[1], '--spot-3': currentHero.spots[2], '--spot-4': currentHero.spots[3], '--spot-5': currentHero.spots[4], '--spot-6': currentHero.spots[5], '--card-a': currentHero.cards[0], '--card-b': currentHero.cards[1], '--card-c': currentHero.cards[2], '--card-border': currentHero.cards[3], '--role-card': currentHero.cards[4], '--media-card': currentHero.cards[5] }}>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Fayez Alhanash home"><span className="brand-mark">F</span><span className="brand-name"><strong>Fayez</strong><span>Alhanash</span></span></a>
         <nav aria-label="Main navigation">
@@ -215,7 +228,9 @@ function App() {
       </section>
 
       <footer className="site-footer" id="approach"><span>Fayez Alhanash · Frontend developer</span><a className="phone-link" href="tel:+963935352733">+963 935 352 733</a></footer>
-    </main>
+      </main>
+      {showMobileNotice && <div className="mobile-notice-backdrop" role="presentation"><section className="mobile-notice" role="dialog" aria-modal="true" aria-labelledby="mobile-notice-title"><button className="mobile-notice-close" type="button" onClick={closeMobileNotice} aria-label="Close notice">×</button><span className="mobile-notice-icon">↗</span><p className="eyebrow">Quick note</p><h2 id="mobile-notice-title">For a better experience, use a PC.</h2><p>This portfolio is designed to be viewed on a larger screen.</p><button className="mobile-notice-action" type="button" onClick={closeMobileNotice}>Continue anyway</button></section></div>}
+    </>
   )
 }
 
