@@ -116,6 +116,7 @@ function App() {
   const [activeHero, setActiveHero] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const [showMobileNotice, setShowMobileNotice] = useState(false)
+  const [isPageLoading, setIsPageLoading] = useState(true)
   const currentHero = heroSlides[activeHero]
 
   useEffect(() => {
@@ -133,6 +134,11 @@ function App() {
     if (isSmallScreen && !wasDismissed) setShowMobileNotice(true)
   }, [])
 
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsPageLoading(false), 1100)
+    return () => window.clearTimeout(timer)
+  }, [])
+
   const closeMobileNotice = () => {
     window.sessionStorage.setItem('mobile-notice-dismissed', 'true')
     setShowMobileNotice(false)
@@ -140,6 +146,7 @@ function App() {
 
   return (
     <>
+      {isPageLoading && <div className="page-loader" role="status" aria-label="Loading portfolio"><div className="page-loader-mark">F</div><p>Fayez Alhanash</p><span className="page-loader-line"><i /></span><small>Loading selected work</small></div>}
       <main className="portfolio" style={{ '--bar-a': currentHero.bar[0], '--bar-b': currentHero.bar[1], '--bar-c': currentHero.bar[2], '--spot-1': currentHero.spots[0], '--spot-2': currentHero.spots[1], '--spot-3': currentHero.spots[2], '--spot-4': currentHero.spots[3], '--spot-5': currentHero.spots[4], '--spot-6': currentHero.spots[5], '--card-a': currentHero.cards[0], '--card-b': currentHero.cards[1], '--card-c': currentHero.cards[2], '--card-border': currentHero.cards[3], '--role-card': currentHero.cards[4], '--media-card': currentHero.cards[5] }}>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Fayez Alhanash home"><span className="brand-mark">F</span><span className="brand-name"><strong>Fayez</strong><span>Alhanash</span></span></a>
