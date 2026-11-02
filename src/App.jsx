@@ -175,8 +175,8 @@ function App() {
         <button className={`theme-toggle${isAutoPlaying ? ' is-on' : ''}`} type="button" onClick={() => setIsAutoPlaying((current) => !current)} aria-pressed={isAutoPlaying} aria-label={`${isAutoPlaying ? 'Turn off' : 'Turn on'} automatic theme changes`}><span className="theme-toggle-track"><span /></span><span>Auto themes</span><strong>{isAutoPlaying ? 'On' : 'Off'}</strong></button>
         <div className="hero-copy">
           <p className="eyebrow">Frontend developer · React</p>
-          <ScrollScaleText as="h1">Interfaces that make complex work feel simple.</ScrollScaleText>
-          <p className="intro">I design and build thoughtful digital products with React, creating clear, reliable interfaces and polished experiences for real users.</p>
+          <ScrollScaleText as="h1">Restaurant operations, made simpler.</ScrollScaleText>
+          <p className="intro">I build polished web experiences with React. Explore Big4, a restaurant management system designed to bring everyday operations into one clear interface.</p>
           <a className="text-link" href="#work" onClick={(event) => { event.preventDefault(); document.getElementById('work')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}>Explore selected work <span>↓</span></a>
         </div>
         <div className="hero-note"><strong>More coming soon</strong></div>
